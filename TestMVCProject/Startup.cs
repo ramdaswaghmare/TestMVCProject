@@ -18,8 +18,7 @@ namespace TestMVCProject
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
-
+        } 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -28,6 +27,7 @@ namespace TestMVCProject
             services.AddMvc().AddXmlSerializerFormatters();
             services.AddSingleton<IEmployeeRepository, MockEmployeeRepository>();
             services.AddRazorPages().AddMvcOptions(options => options.EnableEndpointRouting = false);
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,11 +38,11 @@ namespace TestMVCProject
                 app.UseDeveloperExceptionPage();
             }
             app.UseStaticFiles();
-            //app.UseMvcWithDefaultRoute();
-            app.UseMvc(routes=>
+            app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            });
+            }); 
         }
     }
 }
